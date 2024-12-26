@@ -32,16 +32,18 @@ async function generateReport(template){
     try{
         const browser = await puppeteer.launch({
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            executablePath: '/usr/bin/google-chrome-stable', 
+            headless: true
         });
     
         const page = await browser.newPage();
         await page.setContent(template);
         const pdfBuffer = await page.pdf(
-    {
-                format: 'A4' ,
-                displayHeaderFooter: false,
-                background: true
-            });
+        {
+            format: 'A4' ,
+            displayHeaderFooter: false,
+            background: true
+        });
         await browser.close();
     
         const pdf = Buffer.from(pdfBuffer);

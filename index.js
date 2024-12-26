@@ -29,22 +29,25 @@ app.listen(PORT, () => {
 
 async function generateReport(template){
 
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
-
-    const page = await browser.newPage();
-    await page.setContent(template);
-    const pdfBuffer = await page.pdf(
-{
-            format: 'A4' ,
-            displayHeaderFooter: false,
-            background: true
+    try{
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
-    await browser.close();
-
-    const pdf = Buffer.from(pdfBuffer);
-
-    return pdf;
-
+    
+        const page = await browser.newPage();
+        await page.setContent(template);
+        const pdfBuffer = await page.pdf(
+    {
+                format: 'A4' ,
+                displayHeaderFooter: false,
+                background: true
+            });
+        await browser.close();
+    
+        const pdf = Buffer.from(pdfBuffer);
+    
+        return pdf;
+    } catch(e){
+        console.log(e);
+    }
 }

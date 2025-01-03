@@ -32,7 +32,7 @@ async function generateReport(template){
     try{
         const browser = await puppeteer.launch({
             executablePath: '/usr/bin/google-chrome-stable',
-            headless: true,
+            headless: false,
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',

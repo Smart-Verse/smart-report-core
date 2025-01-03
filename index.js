@@ -38,14 +38,15 @@ async function generateReport(template){
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-gpu',
-                '--no-zygote',
-                '--single-process'
+                '--no-zygote'
             ],
             timeout: 60000
         });
     
         const page = await browser.newPage();
         await page.setContent(template);
+
+
         const pdfBuffer = await page.pdf(
         {
             format: 'A4' ,
@@ -53,10 +54,8 @@ async function generateReport(template){
             background: true
         });
         await browser.close();
-    
-        const pdf = Buffer.from(pdfBuffer);
-    
-        return pdf;
+
+        return Buffer.from(pdfBuffer);
     } catch(e){
         console.log(e);
     }
